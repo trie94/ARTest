@@ -281,6 +281,10 @@ namespace GoogleARCore.Examples.CloudAnchor
 #else
             var anchor = (UnityEngine.XR.iOS.UnityARUserAnchorComponent)m_LastPlacedAnchor;
 #endif
+            // store anchor information to singleton
+            Singleton.instance.anchor = anchor.transform;
+            Debug.Log("anchor: " + Singleton.instance.anchor);
+
             UIController.ShowHostingModeAttemptingHost();
             XPSession.CreateCloudAnchor(anchor).ThenAction(result =>
             {
@@ -311,7 +315,8 @@ namespace GoogleARCore.Examples.CloudAnchor
                 }
 
                 m_LastResolvedAnchor = result.Anchor;
-                Instantiate(_GetAndyPrefab(), result.Anchor.transform);
+
+                //Instantiate(_GetAndyPrefab(), result.Anchor.transform);
                 UIController.ShowResolvingModeSuccess();
             }));
         }
